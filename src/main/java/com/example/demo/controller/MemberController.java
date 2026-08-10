@@ -75,7 +75,7 @@ public class MemberController {
             rttr.addFlashAttribute("msg", "로그인 완료!");
             return "redirect:/";
         } else {
-            rttr.addFlashAttribute("msg", "아이디나 비밀번호를 확인해주세요.");
+            rttr.addFlashAttribute("msg", "아이디 혹은 비밀번호를 확인해주세요.");
             return "redirect:/member/login";
         }
     }
@@ -131,6 +131,26 @@ public class MemberController {
             return "redirect:/member/login";
         } else {
             rttr.addFlashAttribute("msg", "회원정보 수정 실패.");
+            return "redirect:/member/detail";
+        }
+    }
+    @PostMapping("/deleteMember")
+    public String postdeleteMember(int id, String password, HttpSession session, RedirectAttributes rttr){
+        if(id < 1 || password == null || password.trim().isEmpty()){
+            rttr.addFlashAttribute("mag", "잘못된 입력입니다.");
+            return "redirect:/member/detail";
+        }
+        String c = memberService.deleteMember(id,password);
+        if (c.equals("성공")){
+            rttr.addFlashAttribute("msg", "회원 탈퇴 완료! 다시 로그인 해주세요!");
+            session.removeAttribute("user_id");
+            session.removeAttribute("user_name");
+            return "redirect:/";
+        }else if(c.equals("비밀번호 불일치")){
+            rttr.addFlashAttribute("msg", "비밀번호가 일치하지 않습니다.");
+            return "redirect:/member/detail";
+        }else{
+            rttr.addFlashAttribute("msg", "회원 삭제 실패");
             return "redirect:/member/detail";
         }
     }

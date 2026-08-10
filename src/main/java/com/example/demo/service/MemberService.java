@@ -25,4 +25,18 @@ public class MemberService {
     public Member updateMember(Member member){
         return memberRepository.updateMember(member);
     }
+
+    public String deleteMember(int id, String password){
+        Member member = memberRepository.selectMember(id);
+        if (member.getPassword().equals(password)){
+            boolean c = memberRepository.deleteMember(id);
+            if (c){
+                return "성공";
+            }else{
+                return "실패";
+            }
+        }else{
+            return "비밀번호 불일치";
+        }
+    }
 }

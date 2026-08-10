@@ -119,4 +119,20 @@ public class MemberRepository {
         }
         return null;
     }
+
+    public boolean deleteMember(int id){
+        String sql = "DELETE FROM member WHERE id = ?";
+
+        try (Connection conn = ds.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setInt(1, id);
+
+            int rs = pstmt.executeUpdate();
+
+            return rs > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
