@@ -137,7 +137,7 @@ public class MemberController {
     @PostMapping("/deleteMember")
     public String postdeleteMember(int id, String password, HttpSession session, RedirectAttributes rttr){
         if(id < 1 || password == null || password.trim().isEmpty()){
-            rttr.addFlashAttribute("mag", "잘못된 입력입니다.");
+            rttr.addFlashAttribute("msg", "잘못된 입력입니다.");
             return "redirect:/member/detail";
         }
         String c = memberService.deleteMember(id,password);
