@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/post")
-public class Postcontroller {
+public class PostController {
 
     private final PostService postService;
 
