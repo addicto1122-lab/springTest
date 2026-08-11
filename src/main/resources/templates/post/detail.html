@@ -1,24 +1,49 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>게시글 상세 보기</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-<h2>게시글 상세 보기</h2>
-<div>
-    <div th:if="${session.userId != null and session.userId == post.member_id}">
-        <a th:href="@{/post/update(post_id=${post.id})}">수정하기</a>
+<script th:inline="javascript">
+    const msg = /*[[${msg}]]*/ null;
+    if (msg) {
+        alert(msg);
+    }
+</script>
+
+<div class="container">
+    <h1 class="page-title">게시글 상세 보기</h1>
+
+    <div class="detail-header">
+        <h2 class="detail-title" th:text="${post.title}">게시글 제목</h2>
+        <div class="detail-meta">
+            <div class="meta-info">
+                <span><strong>글 번호:</strong> <span th:text="${post.id}"></span></span>
+                <span><strong>작성자:</strong> <span th:text="${post.writer}"></span></span>
+                <span><strong>작성일:</strong> <span th:text="${post.create_at}"></span></span>
+            </div>
+            <div th:if="${session.userId != null and session.userId == post.member_id}">
+                <a th:href="@{/post/delete(id=${post.id})}"
+                   class="top-delete-btn"
+                   onclick="return confirm('정말 이 게시글을 삭제하시겠습니까?');">삭제</a>
+            </div>
+        </div>
     </div>
-    <p><strong>글 번호:</strong> <span th:text="${post.id}"></span></p>
-    <h3><span th:text="${post.title}"></span></h3>
-    <p><strong>작성자:</strong> <span th:text="${post.writer}"></span></p>
-    <p><strong>작성일:</strong> <span th:text="${post.create_at}"></span></p>
     <hr>
-    <div>
-        <p th:text="${post.content}"></p>
+    <div class="form-group">
+        <label>내용</label>
+        <div class="detail-content" th:text="${post.content}">게시글 본문 내용입니다.</div>
+    </div>
+    <div class="btn-group">
+        <a th:href="@{/}" class="cancel-btn">목록으로 돌아가기</a>
+
+        <a th:if="${session.userId != null and session.userId == post.member_id}"
+           th:href="@{/post/update(post_id=${post.id})}"
+           class="submit-btn">수정하기</a>
     </div>
 </div>
-<a th:href="@{/}">목록으로 돌아가기</a>
+
 </body>
 </html>

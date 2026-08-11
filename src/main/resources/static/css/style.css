@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 /* =========================================
-   전체 리셋 및 기본 레이아웃
+   1. 전체 리셋 및 기본 레이아웃
    ========================================= */
 * {
     box-sizing: border-box;
@@ -18,8 +18,15 @@ body {
     margin: 0 auto;
 }
 
+hr {
+    border: none;
+    height: 1px;
+    background-color: #e5e7eb;
+    margin: 24px 0 32px 0;
+}
+
 /* =========================================
-   상단 내비게이션 (로그인/회원가입/마이페이지)
+   2. 상단 내비게이션 (로그인/회원가입/마이페이지)
    ========================================= */
 .user-nav {
     display: flex;
@@ -30,9 +37,14 @@ body {
 }
 
 .user-nav span {
-    font-weight: 600;
-    color: #4f46e5;
+    font-weight: 500;
+    color: #374151;
     font-size: 15px;
+}
+
+.user-nav span strong {
+    color: #4f46e5;
+    font-weight: 600;
 }
 
 .user-nav a {
@@ -54,23 +66,43 @@ body {
     border-color: #4f46e5;
 }
 
-hr {
-    border: none;
-    height: 1px;
-    background-color: #e5e7eb;
-    margin: 24px 0 32px 0;
+/* =========================================
+   3. 게시판 목록 상단 헤더 & 글쓰기 버튼
+   ========================================= */
+.board-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
-h1 {
+.board-header h1 {
     font-size: 26px;
     font-weight: 700;
     color: #111827;
-    margin-bottom: 20px;
+    margin-bottom: 0;
     letter-spacing: -0.5px;
 }
 
+.btn-write {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff !important;
+    background-color: #4f46e5;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.btn-write:hover {
+    background-color: #4338ca;
+}
+
 /* =========================================
-   게시글 목록 (테이블) 스타일
+   4. 게시글 목록 (테이블) 스타일
    ========================================= */
 table {
     width: 100%;
@@ -109,7 +141,6 @@ tbody tr:last-child td {
     border-bottom: none;
 }
 
-/* 행 호버 효과 */
 tbody tr {
     transition: background-color 0.15s ease;
 }
@@ -118,7 +149,6 @@ tbody tr:hover {
     background-color: #f8fafc;
 }
 
-/* 게시글 제목 링크 스타일 (기존 파란색/보라색 제거) */
 td a {
     text-decoration: none;
     color: #1f2937;
@@ -158,9 +188,8 @@ th:nth-child(4), td:nth-child(4) {
 }
 
 /* =========================================
-   상세페이지 / 마이페이지 / 폼(Form) 공통 스타일
+   5. 상세페이지 / 글쓰기 / 폼 공통 스타일
    ========================================= */
-
 .container {
     max-width: 600px;
     margin: 0 auto;
@@ -214,13 +243,17 @@ th:nth-child(4), td:nth-child(4) {
     box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
 }
 
+/* =========================================
+   6. 버튼 공통 스타일 (크기 및 정렬 문제 수정)
+   ========================================= */
 .btn-group {
     display: flex;
     gap: 8px;
     margin-top: 24px;
 }
 
-button, .btn, .cancel-btn {
+/* 모든 버튼 요소(button 및 a 태그)에 동일한 높이와 비율 적용 */
+button, .btn, .cancel-btn, .submit-btn, .delete-btn, .danger-btn {
     flex: 1;
     padding: 11px 0;
     font-size: 14px;
@@ -233,48 +266,48 @@ button, .btn, .cancel-btn {
     transition: all 0.2s ease;
     display: inline-block;
     box-sizing: border-box;
+    line-height: 20px; /* 높이 맞춤용 */
 }
 
 .submit-btn {
     background-color: #4f46e5;
-    color: #ffffff;
+    color: #ffffff !important;
 }
 
 .submit-btn:hover {
     background-color: #4338ca;
 }
 
+.cancel-btn {
+    background-color: #ffffff;
+    color: #6b7280 !important;
+    border: 1px solid #d1d5db;
+}
+
+.cancel-btn:hover {
+    background-color: #f9fafb;
+    color: #374151 !important;
+}
+
 .delete-btn {
     background-color: #f3f4f6;
-    color: #4b5563;
+    color: #4b5563 !important;
     border: 1px solid #e5e7eb;
 }
 
 .delete-btn:hover {
     background-color: #fee2e2;
-    color: #dc2626;
+    color: #dc2626 !important;
     border-color: #fca5a5;
 }
 
 .danger-btn {
     background-color: #dc2626;
-    color: #ffffff;
+    color: #ffffff !important;
 }
 
 .danger-btn:hover {
     background-color: #b91c1c;
-}
-
-.cancel-btn {
-    background-color: #ffffff;
-    color: #6b7280;
-    border: 1px solid #d1d5db;
-    line-height: 20px;
-}
-
-.cancel-btn:hover {
-    background-color: #f9fafb;
-    color: #374151;
 }
 
 .delete-box {
@@ -289,7 +322,37 @@ button, .btn, .cancel-btn {
     color: #991b1b;
 }
 
-/* 상세페이지 전용 본문 박스 */
+/* =========================================
+   7. 상세페이지 전용 레이아웃
+   ========================================= */
+.detail-header {
+    margin-bottom: 16px;
+}
+
+.detail-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 12px;
+    word-break: break-all;
+}
+
+.detail-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 13px;
+    color: #6b7280;
+    background-color: #f9fafb;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #f3f4f6;
+}
+
+.detail-meta strong {
+    color: #374151;
+}
+
 .detail-content {
     min-height: 180px;
     padding: 16px;
@@ -298,5 +361,43 @@ button, .btn, .cancel-btn {
     border: 1px solid #f3f4f6;
     line-height: 1.6;
     color: #374151;
-    white-space: pre-wrap; /* 줄바꿈 유지 */
+    white-space: pre-wrap;
+}
+/* =========================================
+   상단 삭제 버튼 전용 스타일 (추가)
+   ========================================= */
+.detail-meta {
+    display: flex;
+    justify-content: space-between; /* 정보와 삭제버튼을 양쪽 끝으로 정렬 */
+    align-items: center;
+    background-color: #f9fafb;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #f3f4f6;
+}
+
+.meta-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.top-delete-btn {
+    font-size: 13px;
+    font-weight: 600;
+    color: #dc2626 !important;
+    text-decoration: none;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid #fecaca;
+    background-color: #fef2f2;
+    transition: all 0.2s ease;
+}
+
+.top-delete-btn:hover {
+    background-color: #dc2626;
+    color: #ffffff !important;
+    border-color: #dc2626;
 }

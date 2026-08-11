@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
-
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/member")
@@ -91,7 +89,7 @@ public class MemberController {
 
     @GetMapping("/detail")
     public String getDetail(HttpSession session, Model model, RedirectAttributes rttr) {
-        Integer userId = (Integer) session.getAttribute("user_id");
+        Integer userId = (Integer) session.getAttribute("userId");
 
         if (userId == null) {
             rttr.addFlashAttribute("msg", "로그인이 필요합니다.");
@@ -104,7 +102,7 @@ public class MemberController {
 
     @PostMapping("/detail")
     public String PostDetail(HttpSession session, Member member, RedirectAttributes rttr) {
-        Integer userId = (Integer) session.getAttribute("user_id");
+        Integer userId = (Integer) session.getAttribute("userId");
         if (userId == null) {
             rttr.addFlashAttribute("msg", "로그인이 필요합니다.");
             return "redirect:/member/login";
@@ -123,31 +121,30 @@ public class MemberController {
 
         if (mem != null) {
             rttr.addFlashAttribute("msg", "회원정보 수정 완료! 다시 로그인 해주세요!");
-            session.removeAttribute("user_id");
-            session.removeAttribute("user_name");
+            session.invalidate();
             return "redirect:/member/login";
         } else {
             rttr.addFlashAttribute("msg", "회원정보 수정 실패.");
             return "redirect:/member/detail";
         }
     }
+
     @PostMapping("/deleteMember")
     public String postdeleteMember(int id, String password, HttpSession session, RedirectAttributes rttr){
         if(id < 1 || password == null || password.trim().isEmpty()){
             rttr.addFlashAttribute("msg", "잘못된 입력입니다.");
             return "redirect:/member/detail";
         }
-        String c = memberService.deleteMember(id,password);
+        String c = memberService.deleteMember(id, password);
         if (c.equals("성공")){
             rttr.addFlashAttribute("msg", "회원 탈퇴 완료!");
-            session.removeAttribute("user_id");
-            session.removeAttribute("user_name");
+            session.invalidate();
             return "redirect:/";
-        }else if(c.equals("비밀번호 불일치")){
+        } else if(c.equals("비밀번호 불일치")){
             rttr.addFlashAttribute("msg", "비밀번호가 일치하지 않습니다.");
             return "redirect:/member/detail";
-        }else{
-            rttr.addFlashAttribute("msg", "회원 삭제 실패");
+        } else {
+            rttr.addFlashAttribute("msg", "회원 탈퇴 실패!");
             return "redirect:/member/detail";
         }
     }

@@ -5,6 +5,12 @@
     <title>게시글 수정</title>
 </head>
 <body>
+<script th:inline="javascript">
+    const msg = /*[[${msg}]]*/ null;
+    if (msg) {
+        alert(msg);
+    }
+</script>
     <h1>수정페이지</h1>
 </body>
 </html>

@@ -11,8 +11,6 @@ import java.sql.ResultSet;
 
 @Repository
 public class MemberRepository {
-
-
     private final DataSource ds;
 
     @Autowired

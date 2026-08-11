@@ -21,5 +21,23 @@ public class PostService {
         return postRepository.selectPost(id);
     }
 
+    public boolean insertPost(String title, String content, int id){
+        return postRepository.insertPost(title, content, id);
+    }
+
+    public String deletePost(int post_id, int user_id){
+        Post post = postRepository.selectPost(post_id);
+
+        if (post.getMember_id() != user_id){
+            return "아이디 불일치";
+        }
+        boolean c = postRepository.deletePost(post_id, user_id);
+        if (c){
+            return "성공";
+        }else{
+            return "실패";
+        }
+
+    }
 
 }
