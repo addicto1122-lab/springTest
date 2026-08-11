@@ -1,12 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.Member;
-import com.example.demo.domain.Post;
 import com.example.demo.service.MemberService;
-import com.example.demo.service.PostService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -70,8 +67,8 @@ public class MemberController {
         Member member = memberService.loginMember(id, password);
 
         if (member != null) {
-            session.setAttribute("user_id", member.getId());
-            session.setAttribute("user_name", member.getName());
+            session.setAttribute("userId", member.getId());
+            session.setAttribute("userName", member.getName());
             rttr.addFlashAttribute("msg", "로그인 완료!");
             return "redirect:/";
         } else {

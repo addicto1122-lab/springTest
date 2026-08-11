@@ -7,6 +7,9 @@
 <body>
 <h2>게시글 상세 보기</h2>
 <div>
+    <div th:if="${session.userId != null and session.userId == post.member_id}">
+        <a th:href="@{/post/update(post_id=${post.id})}">수정하기</a>
+    </div>
     <p><strong>글 번호:</strong> <span th:text="${post.id}"></span></p>
     <h3><span th:text="${post.title}"></span></h3>
     <p><strong>작성자:</strong> <span th:text="${post.writer}"></span></p>
