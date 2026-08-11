@@ -12,4 +12,5 @@ public class Post {
     private int member_id;
     private Date create_at;
     private int view_count;
+    private String writer;
 }

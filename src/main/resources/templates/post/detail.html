@@ -1,10 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>게시글 상세 보기</title>
 </head>
 <body>
-$END$
+<h2>게시글 상세 보기</h2>
+<div>
+    <p><strong>글 번호:</strong> <span th:text="${post.id}"></span></p>
+    <h3><span th:text="${post.title}"></span></h3>
+    <p><strong>작성자:</strong> <span th:text="${post.writer}"></span></p>
+    <p><strong>작성일:</strong> <span th:text="${post.create_at}"></span></p>
+    <hr>
+    <div>
+        <p th:text="${post.content}"></p>
+    </div>
+</div>
+<a th:href="@{/}">목록으로 돌아가기</a>
 </body>
 </html>

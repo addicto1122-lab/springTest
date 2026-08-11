@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 @Repository
 public class MemberRepository {
 
-    // 1. 스프링 컨테이너로부터 DataSource를 주입받음
+
     private final DataSource ds;
 
     @Autowired
@@ -23,7 +23,6 @@ public class MemberRepository {
     public boolean insertMember(Member member) {
         String sql = "INSERT INTO member(name, age, email, password) VALUES(?, ?, ?, ?)";
 
-        // 2. try-with-resources 구문을 활용한 안전한 자원 해제
         try (Connection conn = ds.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 

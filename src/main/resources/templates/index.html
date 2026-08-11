@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>메인페이지</title>
+    <!-- static/css/style.css 파일을 연결합니다 -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 <script th:inline="javascript">
@@ -12,15 +14,41 @@
         alert(msg);
     }
 </script>
-<a href="/member/signup">회원가입</a>
-<div th:if="${session.user_name != null}">
+
+<div class="user-nav" th:if="${session.user_name != null}">
     <span th:text="${session.user_name}"></span>님 환영합니다.
     <a href="/member/logout">로그아웃</a>
     <a href="/member/detail">마이페이지</a>
 </div>
 
-<div th:unless="${session.loginUser != null}">
+<div class="user-nav" th:if="${session.user_name == null}">
+    <a href="/member/signup">회원가입</a>
     <a href="/member/login">로그인</a>
 </div>
+
+<hr>
+
+<h1>게시글 목록</h1>
+<table>
+    <thead>
+    <tr>
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성일</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="p : ${posts}">
+        <td th:text="${p.id}"></td>
+        <td>
+            <a th:href="@{/post/detail(id=${p.id})}" th:text="${p.title}"></a>
+        </td>
+        <td th:text="${p.writer}"></td>
+        <td th:text="${p.create_at}"></td>
+    </tr>
+    </tbody>
+</table>
+
 </body>
 </html>
