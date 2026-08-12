@@ -1,16 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>게시글 수정</title>
+    <!-- CSS 파일 연결 (프로젝트의 CSS 경로에 맞게 static 하위 경로를 지정하세요) -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
+
 <script th:inline="javascript">
     const msg = /*[[${msg}]]*/ null;
     if (msg) {
         alert(msg);
     }
 </script>
-    <h1>수정페이지</h1>
+
+<div class="container">
+    <h1 class="page-title">게시글 수정</h1>
+
+    <form th:action="@{/post/update}" method="post" th:object="${post}">
+        <input type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{member_id}">
+
+        <div class="form-group">
+            <label for="title">제목</label>
+            <input type="text" id="title" th:field="*{title}" placeholder="제목을 입력하세요" required>
+        </div>
+
+        <div class="form-group">
+            <label for="content">내용</label>
+            <textarea id="content" th:field="*{content}" rows="10" placeholder="내용을 입력하세요" required></textarea>
+        </div>
+
+        <div class="btn-group">
+            <button type="submit" class="submit-btn">수정 완료</button>
+            <a th:href="@{/post/detail/{id}(id=*{id})}" class="cancel-btn">취소</a>
+        </div>
+    </form>
+</div>
+
 </body>
 </html>

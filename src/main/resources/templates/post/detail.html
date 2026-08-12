@@ -2,6 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>게시글 상세 보기</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
@@ -14,35 +15,86 @@
 </script>
 
 <div class="container">
-    <h1 class="page-title">게시글 상세 보기</h1>
+    <!-- 상단 이동 헤더 -->
+    <div class="top-bar">
+        <a th:href="@{/}" class="back-link">&larr; 목록으로 돌아가기</a>
+    </div>
 
-    <div class="detail-header">
-        <h2 class="detail-title" th:text="${post.title}">게시글 제목</h2>
-        <div class="detail-meta">
-            <div class="meta-info">
-                <span><strong>글 번호:</strong> <span th:text="${post.id}"></span></span>
-                <span><strong>작성자:</strong> <span th:text="${post.writer}"></span></span>
-                <span><strong>작성일:</strong> <span th:text="${post.create_at}"></span></span>
+    <!-- 게시글 헤더 영역 -->
+    <div class="post-header">
+        <h1 class="post-title" th:text="${post.title}">게시글 제목입니다</h1>
+
+        <div class="post-meta-card">
+            <div class="meta-left">
+                <div class="author-badge">
+                    <span class="author-name" th:text="${post.writer}">작성자</span>
+                </div>
+                <div class="meta-details">
+                    <span><strong>글 번호:</strong> #<span th:text="${post.id}">1</span></span>
+                    <span class="dot">•</span>
+                    <span><strong>작성일:</strong> <span th:text="${post.create_at}">2026-08-12</span></span>
+                </div>
             </div>
-            <div th:if="${session.userId != null and session.userId == post.member_id}">
+
+            <div th:if="${session.userId != null and session.userId == post.member_id}" class="meta-actions">
+                <a th:href="@{/post/update(post_id=${post.id})}" class="btn-sm btn-outline">수정</a>
                 <a th:href="@{/post/delete(id=${post.id})}"
-                   class="top-delete-btn"
+                   class="btn-sm btn-danger-outline"
                    onclick="return confirm('정말 이 게시글을 삭제하시겠습니까?');">삭제</a>
             </div>
         </div>
     </div>
-    <hr>
-    <div class="form-group">
-        <label>내용</label>
-        <div class="detail-content" th:text="${post.content}">게시글 본문 내용입니다.</div>
-    </div>
-    <div class="btn-group">
-        <a th:href="@{/}" class="cancel-btn">목록으로 돌아가기</a>
 
-        <a th:if="${session.userId != null and session.userId == post.member_id}"
-           th:href="@{/post/update(post_id=${post.id})}"
-           class="submit-btn">수정하기</a>
+    <!-- 게시글 본문 -->
+    <div class="post-body">
+        <div class="post-content" th:text="${post.content}">게시글 본문 내용입니다.</div>
     </div>
+
+    <!-- 댓글 영역 -->
+    <section class="comment-section">
+        <div class="comment-header-title">
+            <h3>댓글 <span class="comment-count" th:text="${#lists.size(comments)}">0</span></h3>
+        </div>
+
+        <!-- 1. 댓글 작성 폼 -->
+        <div th:if="${session.userId != null}" class="comment-write-card">
+            <form th:action="@{/comment/write}" method="post">
+                <input type="hidden" name="post_id" th:value="${post.id}">
+                <textarea name="content" rows="3" placeholder="댓글을 입력하세요..." required class="comment-textarea"></textarea>
+                <div class="comment-submit-row">
+                    <button type="submit" class="btn-primary btn-sm">댓글 등록</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- 미로그인 안내 -->
+        <div th:unless="${session.userId != null}" class="comment-login-card">
+            <p>댓글을 작성하려면 <a th:href="@{/login}">로그인</a>이 필요합니다.</p>
+        </div>
+
+        <!-- 2. 댓글 목록 -->
+        <div class="comment-list">
+            <div th:if="${#lists.isEmpty(comments)}" class="comment-empty">
+                등록된 댓글이 없습니다. 첫 번째 댓글을 남겨보세요!
+            </div>
+
+            <div th:each="comment : ${comments}" class="comment-card">
+                <div class="comment-card-header">
+                    <div class="comment-user-info">
+                        <span class="comment-author" th:text="${comment.name}">작성자</span>
+                        <span class="comment-date" th:text="${comment.create_at}">2026-08-12</span>
+                    </div>
+
+                    <div th:if="${session.userId != null and session.userId == comment.member_id}">
+                        <a th:href="@{/comment/delete(comment_id=${comment.comment_id}, post_id=${post.id})}"
+                           onclick="return confirm('댓글을 삭제하시겠습니까?');"
+                           class="comment-delete-link">삭제</a>
+                    </div>
+                </div>
+                <p class="comment-body" th:text="${comment.content}">댓글 내용입니다.</p>
+            </div>
+        </div>
+    </section>
 </div>
 
 </body>

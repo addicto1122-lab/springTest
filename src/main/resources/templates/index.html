@@ -31,7 +31,6 @@
     <a href="/member/signup">회원가입</a>
     <a href="/member/login">로그인</a>
 </div>
-<hr>
 <div class="board-header">
     <h1>게시글 목록</h1>
     <a href="/post/insert" class="btn-write" onclick="checkLogin(event)">글쓰기</a>
@@ -54,7 +53,6 @@
         <td th:text="${p.writer}"></td>
         <td th:text="${p.create_at}"></td>
     </tr>
-    <!-- 게시글이 없을 때 예외 처리 -->
     <tr th:if="${#lists.isEmpty(posts)}">
         <td colspan="4" style="text-align: center; color: #9ca3af; padding: 40px 0;">
             등록된 게시글이 없습니다.

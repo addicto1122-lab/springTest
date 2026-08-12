@@ -18,7 +18,6 @@
 <div class="container">
     <h2 class="page-title">마이페이지</h2>
 
-    <!-- 1. 회원 정보 수정 Form -->
     <form th:action="@{/member/detail}" method="post" th:object="${user}">
         <input type="hidden" name="id" th:value="*{id}">
 

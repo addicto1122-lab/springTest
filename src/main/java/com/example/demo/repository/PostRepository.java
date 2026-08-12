@@ -103,4 +103,22 @@ public class PostRepository {
         return false;
     }
 
+    public boolean updatePost(Post post){
+        String sql = "UPDATE post SET title = ?, content = ?, create_at = now() WHERE id = ?";
+        try (Connection conn = ds.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setString(1, post.getTitle());
+            pstmt.setString(2, post.getContent());
+            pstmt.setInt(3, post.getId());
+
+            int rs = pstmt.executeUpdate();
+
+            return rs > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }

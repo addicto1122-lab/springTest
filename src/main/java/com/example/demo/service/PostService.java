@@ -37,7 +37,10 @@ public class PostService {
         }else{
             return "실패";
         }
+    }
 
+    public boolean updatePost(Post post){
+        return postRepository.updatePost(post);
     }
 
 }
